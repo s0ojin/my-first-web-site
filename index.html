@@ -24,9 +24,7 @@
   <h1><a href="index.html">WEB</a></h1>
 <div id="grid">
     <ol>
-      <li><a href = "#!html" onclick = "fetchPage('html')">HTML</a></li>
-      <li><a href = "#!css" onclick = "fetchPage('css')">CSS</a></li>
-      <li><a href = "#!javascript" onclick = "fetchPage('javascript')">JavaScript</a></li>
+
     </ol>
   <div id="article">
     <h2>WEB</h2>
@@ -47,7 +45,22 @@
 if(location.hash) {
   fetchPage(location.hash.substr(2));
 } 
-</script>
 
+fetch("list").then(function(response){
+      response.text().then(function(text) {
+        let listItem = text.split(',');
+        let i = 0;
+        let tags = '';
+        while(i<listItem.length) {
+          const item = listItem[i];
+          const tag = `<li><a href = "#!${item}" onclick = "fetchPage('${item}')">${item}</a></li>`;
+         //const tag = '<li><a href="#!'+item+'" onclick="fetchPage(\''+item+'\')">'+item+'</a></li>';
+          i = i + 1
+          tags = tags + tag;
+        }
+        document.querySelector('ol').innerHTML = tags;
+      })
+  });
+</script>
 </body>
 </html>
